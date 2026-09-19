@@ -505,6 +505,7 @@ impl<'db> ResolutionCtx<'db, '_> {
                 | InferredTypeData::Generic(_)
                 | InferredTypeData::Local(_)
                 | InferredTypeData::GlobalType(_)
+                | InferredTypeData::IndexedAccess(_)
                 | InferredTypeData::Intersection(_)
                 | InferredTypeData::TypeOperator(_)
                 | InferredTypeData::Literal(_)
@@ -597,7 +598,7 @@ impl<'db> ResolutionCtx<'db, '_> {
                     member.kind = member.kind.clone().with_const_asserted();
                 }
             }
-            RawTypeData::Tuple(_) => {}
+            RawTypeData::Tuple(tuple) => tuple.is_inferred_array = false,
             RawTypeData::Unknown
             | RawTypeData::Global
             | RawTypeData::BigInt
@@ -616,6 +617,7 @@ impl<'db> ResolutionCtx<'db, '_> {
             | RawTypeData::Module(_)
             | RawTypeData::Namespace(_)
             | RawTypeData::Generic(_)
+            | RawTypeData::IndexedAccess(_)
             | RawTypeData::Intersection(_)
             | RawTypeData::Union(_)
             | RawTypeData::TypeOperator(_)

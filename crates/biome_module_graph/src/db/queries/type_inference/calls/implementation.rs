@@ -1795,6 +1795,7 @@ fn infer_generic_return_type<'db>(
                             is_rest: matches!(arg, ResolvedCallArgument::Spread(_)),
                         })
                         .collect::<Box<[_]>>(),
+                    false,
                 ))
             };
             ResolvedCallArgument::ConstArgument {
